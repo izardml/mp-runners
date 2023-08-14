@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merah Putih Runners</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- S:Home Section -->
+        <section id="home">
+            <div class="left">
+                <div class="btn-group">
+                    <button>PLAY</button>
+                    <button onclick="document.getElementById('leaderboard').style.display = 'flex'">LEADERBOARD</button>
+                    <button onclick="document.getElementById('credit').style.display = 'flex'">CREDIT</button>
+                </div>
+            </div>
+            <div class="right">
+                <div class="hero">
+                    <h1>Merah Putih Runners</h1>
+                    <img src="assets/img/run1.png" alt="Run 1">
+                </div>
+            </div>
+            <div class="top">
+                <div class="btn-group">
+                    <button>Sound: ON</button>
+                    <button onclick="document.getElementById('help').style.display = 'flex'">Help</button>
+                </div>
+            </div>
+        </section>
+        <!-- E:Home Section -->
+
+        <!-- S:Leaderboard Modal -->
+        <div id="leaderboard" class="modal">
+            <div class="modal-container">
+                <h2>Leaderboard</h2>
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Anton</td>
+                            <td>1200</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <span class="close-modal" onclick="document.getElementById('leaderboard').style.display = 'none'">X</span>
+            </div>
+        </div>
+        <!-- E:Leaderboard Modal -->
+
+        <!-- S:Credit Modal -->
+        <div id="credit" class="modal">
+            <div class="modal-container">
+                <h2>Credit</h2>
+                <ul class="credit-list">
+                    <li>Fonts: <a href="#">visitor</a></li>
+                    <li>Fonts: <a href="#">visitor</a></li>
+                </ul>
+                <span class="close-modal" onclick="document.getElementById('credit').style.display = 'none'">X</span>
+            </div>
+        </div>
+        <!-- E:Credit Modal -->
+
+        <!-- S:Help Modal -->
+        <div id="help" class="modal">
+            <div class="modal-container">
+                <h2>Help</h2>
+                <ul class="help-list">
+                    <li>
+                        Klik 'Play' untuk memulai permainan.
+                    </li>
+                    <li>
+                        Jika kamu bermain di PC/Laptop, gunakan panah kanan/kiri untuk menggerakkan karakter.
+                    </li>
+                    <li>
+                        Jika kamu bermain di Mobile/Smartphone, tap sisi kanan/kiri layar untuk menggerakkan karakter.
+                    </li>
+                </ul>
+                <span class="close-modal" onclick="document.getElementById('help').style.display = 'none'">X</span>
+            </div>
+        </div>
+        <!-- E:Help Modal -->
+    </div>
+</body>
+</html>
