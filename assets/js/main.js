@@ -11,28 +11,32 @@ left,
 right
 
 function startGame() {
-    let score = 0
-    let frameNo = 0
-    let speed = 0
-
     document.getElementById('home').style.display = 'none'
-    document.querySelector('.game-controller').style.display = 'flex'
-
-    left = new component(116, myGameArea.canvas.height, 'limegreen', 0, 0)
-    right = new component(116, myGameArea.canvas.height, 'limegreen', 284, 0)
-    leftLine = new component(5, myGameArea.canvas.height, 'black', 111, 0)
-    rightLine = new component(5, myGameArea.canvas.height, 'black', 284, 0)
-
-    character = new component(76, 120, 'run1', 172 - 10, 310, 'image')
-    player = new component(56, 40, 'transparent', 172, 380)
-    scoreDisplay = new component('30px', 'visitor', 'black', 10, 40, 'text')
 
     myGameArea.start()
+
+    left = new component((myGameArea.canvas.width - 168) / 2, myGameArea.canvas.height, 'limegreen', 0, 0)
+    right = new component((myGameArea.canvas.width - 168) / 2, myGameArea.canvas.height, 'limegreen', myGameArea.canvas.width - ((myGameArea.canvas.width - 168) / 2), 0)
+    leftLine = new component(5, myGameArea.canvas.height, 'black', ((myGameArea.canvas.width - 168) / 2) - 5, 0)
+    rightLine = new component(5, myGameArea.canvas.height, 'black', myGameArea.canvas.width - ((myGameArea.canvas.width - 168) / 2), 0)
+
+    if (myGameArea.canvas.width == 800) {
+        character = new component(76, 120, 'run1', left.width + 56 - 10, myGameArea.canvas.height - 120 - 20, 'image')
+        player = new component(56, 40, 'transparent', left.width + 56, myGameArea.canvas.height - 120 - 20 + 70)
+    } else {
+        character = new component(76, 120, 'run1', left.width + 56 - 10, myGameArea.canvas.height - 120 - 50, 'image')
+        player = new component(56, 40, 'transparent', left.width + 56, myGameArea.canvas.height - 120 - 50 + 70)
+    }
+    scoreDisplay = new component('30px', 'visitor', 'black', 20, 40, 'text')
 }
 
 let myGameArea = {
     canvas: document.getElementById('canvas'),
     start: function() {
+        let compStyle = window.getComputedStyle(this.canvas)
+        this.canvas.width = parseInt(compStyle.getPropertyValue('width'), 10)
+        this.canvas.height = parseInt(compStyle.getPropertyValue('height'), 10)
+
         this.context = this.canvas.getContext('2d')
         this.interval = setInterval(updateGameArea, 20)
 
@@ -153,7 +157,13 @@ function updateGameArea() {
     if(frameNo == 1 || everyinterval(objInterval[speed])) {
         let x, rand, rand2, rand3
     
-        x = [119, 175, 231]
+        // x = [119, 175, 231]
+
+        x = [
+            left.width + 3,
+            left.width + 3 + 56,
+            left.width + 3 + 56 + 56,
+        ]
 
         rand = Math.floor(Math.random() * 3)
         rand2 = Math.floor(Math.random() * 3)
@@ -201,7 +211,7 @@ function updateGameArea() {
 }
 
 function moveleft() {
-    if(player.x > 116) {
+    if(player.x > left.width) {
         character.x -= 56
         player.x -= 56
     }
@@ -209,7 +219,7 @@ function moveleft() {
 }
 
 function moveright() {
-    if(player.x < 228) {
+    if(player.x < (left.width + (56 * 2))) {
         character.x += 56
         player.x += 56
     }
