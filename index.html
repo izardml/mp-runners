@@ -12,7 +12,7 @@
         <section id="home">
             <div class="left">
                 <div class="btn-group">
-                    <button>PLAY</button>
+                    <button onclick="startGame()">PLAY</button>
                     <button onclick="document.getElementById('leaderboard').style.display = 'flex'">LEADERBOARD</button>
                     <button onclick="document.getElementById('credit').style.display = 'flex'">CREDIT</button>
                 </div>
@@ -25,7 +25,7 @@
             </div>
             <div class="top">
                 <div class="btn-group">
-                    <button>Sound: ON</button>
+                    <!-- <button>Sound: ON</button> -->
                     <button onclick="document.getElementById('help').style.display = 'flex'">Help</button>
                 </div>
             </div>
@@ -79,16 +79,65 @@
                         Klik 'Play' untuk memulai permainan.
                     </li>
                     <li>
+                        Gunakan tombol panah kanan/kiri untuk menggerakkan karakter.
+                    </li>
+                    <!-- <li>
                         Jika kamu bermain di PC/Laptop, gunakan panah kanan/kiri untuk menggerakkan karakter.
                     </li>
                     <li>
                         Jika kamu bermain di Mobile/Smartphone, tap sisi kanan/kiri layar untuk menggerakkan karakter.
-                    </li>
+                    </li> -->
                 </ul>
                 <span class="close-modal" onclick="document.getElementById('help').style.display = 'none'">X</span>
             </div>
         </div>
         <!-- E:Help Modal -->
+        
+        <!-- S:Pause Modal -->
+        <div id="pause" class="modal">
+            <div class="modal-container">
+                <h2>Pause</h2>
+                <div class="btn-group">
+                    <button onclick="resumeGame()">Resume</button>
+                    <button onclick="location.href = 'index.html'">Exit</button>
+                </div>
+            </div>
+        </div>
+        <!-- E:Pause Modal -->
+
+        <!-- S:Game Over Modal -->
+        <div id="game-over" class="modal">
+            <div class="modal-container">
+                <h2>Game Over</h2>
+                <div class="credit-list">
+                    <span id="final-score"></span>
+                </div>
+                <div class="btn-group">
+                    <button onclick="location.href = 'index.html'">Ok</button>
+                </div>
+            </div>
+        </div>
+        <!-- E:Game Over Modal -->
+
+        <!-- Game Controller -->
+        <div class="game-controller">
+            <button onclick="moveleft()"> < </button>
+            <button onclick="moveright()"> > </button>
+        </div>
+
+        <!-- Game Canvas -->
+        <!-- <canvas id="canvas" width="450" height="800"></canvas> -->
+        <canvas id="canvas" width="400" height="450"></canvas>
+
+        <!-- Game Assets Img -->
+        <div class="game-img">
+            <img src="assets/img/run1.png" alt="Run 1" id="run1">
+            <img src="assets/img/run2.png" alt="Run 2" id="run2">
+            <img src="assets/img/fall.png" alt="Fall" id="fall">
+        </div>
     </div>
+
+    <!-- Game JS -->
+    <script src="assets/js/main.js"></script>
 </body>
 </html>

@@ -16,6 +16,10 @@ body {
     justify-content: center;
 }
 
+button {
+    cursor: pointer;
+}
+
 .container {
     margin-top: 5rem;
     width: 800px;
@@ -44,7 +48,6 @@ body {
 }
 
 #home .left .btn-group button {
-    cursor: pointer;
     display: block;
     width: 100%;
     font-size: 1.5rem;
@@ -79,7 +82,6 @@ body {
 }
 
 #home .top .btn-group button {
-    cursor: pointer;
     display: inline-block;
     padding: 0.1rem 0.5rem;
 }
@@ -98,7 +100,7 @@ body {
     background-color: whitesmoke;
     margin: auto;
     width: 60%;
-    height: 70%;
+    max-height: 70%;
     border: 1px solid #767676;
     border-radius: 4px;
     padding: 2rem 7%;
@@ -117,16 +119,33 @@ body {
 }
 
 .modal .modal-container .credit-list {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
+    text-align: center;
+    list-style: none;
 }
 
 .modal .modal-container .help-list li {
-    margin-top: 1rem;
-    margin: 1rem;
+    margin: 0.5rem 1rem;
     font-weight: 800;
     font-family: monospace;
     line-height: 1.2;
     text-align: justify;
+}
+
+.modal .modal-container .btn-group {
+    margin-top: 0.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.modal .modal-container .btn-group button {
+    font-size: 1.2rem;
+    padding: 0.25rem 1rem;
+}
+
+#game-over {
+    /* display: flex; */
 }
 
 table, th, td {
@@ -145,6 +164,31 @@ th, td {
     right: 0;
     padding: 0.5rem 1rem;
     cursor: pointer;
+}
+
+#canvas {
+    display: block;
+    margin: auto;
+    background-color: whitesmoke;
+    border: 1px solid #767676;
+}
+
+.game-controller {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.game-controller button {
+    display: inline-block;
+    opacity: 0;
+    width: 50%;
+    height: 100%;
+}
+
+.game-img {
+    display: none;
 }
 
 @media screen and (max-width: 767px) {
@@ -183,5 +227,25 @@ th, td {
     
     .modal .modal-container .help-list li {
         line-height: 1.6;
+    }
+
+    #canvas {
+        margin: 1rem auto;
+    }
+
+    .game-controller {
+        bottom: 0;
+        height: 40%;
+        justify-content: space-around;
+        align-items: center;
+        padding: 1rem;
+        /* border: 1px solid red; */
+    }
+
+    .game-controller button {
+        width: 45%;
+        height: 200px;
+        opacity: 1;
+        font-size: 5rem;
     }
 }
