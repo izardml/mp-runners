@@ -9,7 +9,12 @@ npc = [],
 house,
 
 left,
-right
+right,
+
+femaleVoice,
+footstep,
+gameOverSound,
+scoreSound = []
 
 function startGame() {
     document.getElementById('home').style.display = 'none'
@@ -30,6 +35,13 @@ function startGame() {
         player = new component(56, 56, 'shadow', left.width + 56, myGameArea.canvas.height - 120 - 50 + 73, 'image')
     }
     scoreDisplay = new component('30px', 'visitor', 'black', 20, 40, 'text')
+
+    // scoreSound = new sound('coin')
+    // femaleVoiceL = new sound('female-voice-l')
+    // femaleVoiceR = new sound('female-voice-r')
+    // femaleVoice = new sound('female-voice')
+    footstep = new sound('footstep')
+    gameOverSound = new sound('shocked')
 }
 
 let myGameArea = {
@@ -133,6 +145,7 @@ function updateGameArea() {
         } else {
             character.image.src = document.getElementById('run1').src
         }
+        footstep.play()
 
         // flag sprite
         for(i = 0; i < flag.length; i++) {
@@ -152,8 +165,10 @@ function updateGameArea() {
                 player.y += myGameArea.canvas.height
                 myGameArea.stop()
             }
-            document.getElementById('final-score').innerHTML = 'Score: ' + score
             updateData(score)
+            footstep.stop()
+            gameOverSound.play()
+            document.getElementById('final-score').innerHTML = 'Score: ' + score
             document.getElementById('game-over').style.display = 'flex'
             document.getElementById('btn-pause').style.display = 'none'
         }
@@ -161,6 +176,7 @@ function updateGameArea() {
 
     for(i = 0; i < flag.length; i++) {
         if(player.crashWith(flag[i])) {
+            scoreSound[i].play()
             score += 1
             flag[i].y += myGameArea.canvas.height
         }
@@ -194,6 +210,7 @@ function updateGameArea() {
             }
         }
         flag.push(new component(50, 50, 'flag1', x[randFlag], -70, 'image'))
+        scoreSound.push(new sound('coin'))
     }
 
     if(frameNo == 1 || everyinterval(objInterval[speed] * 2)) {
@@ -259,6 +276,7 @@ function moveleft() {
     if(player.x > left.width) {
         character.x -= 56
         player.x -= 56
+        // femaleVoice.play()
     }
     myGameArea.key = false
 }
@@ -267,6 +285,7 @@ function moveright() {
     if(player.x < (left.width + (56 * 2))) {
         character.x += 56
         player.x += 56
+        // femaleVoice.play()
     }
     myGameArea.key = false
 }
@@ -286,10 +305,10 @@ function everyinterval(n) {
     return false
 }
 
-var storedData = localStorage.getItem('leaderboard')
-var parsedData = JSON.parse(storedData)
-
 function loadData() {
+    var storedData = localStorage.getItem('leaderboard')
+    var parsedData = JSON.parse(storedData)
+
     if (localStorage.getItem('leaderboard')) {
         console.log('data sudah ada')
     } else {
@@ -307,7 +326,7 @@ function loadData() {
         ]
         
         localStorage.setItem('leaderboard', JSON.stringify(leaderboard))
-        // localStorage.setItem('complete', true)
+        // localStorage.setItem('sound', true)
         console.log('data berhasil dimuat')
     }
 
@@ -339,6 +358,9 @@ function loadData() {
 }
 
 function updateData(newScore) {
+    var storedData = localStorage.getItem('leaderboard')
+    var parsedData = JSON.parse(storedData)
+    
     targetItemIndex = parsedData.findIndex(function(item) {
         return item.id === 10
     })
@@ -354,4 +376,35 @@ function updateData(newScore) {
     }
 }
 
+function sound(src) {
+    this.sound = document.createElement('audio')
+    this.sound.src = 'assets/sound/' + src + '.mp3'
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+    this.play = function() {
+        this.sound.play()
+    }
+    this.stop = function() {
+        this.sound.pause()
+    }
+}
+
+let bgm = document.getElementById('bgm')
+
+function playBGM() {
+    bgm.play()
+    document.getElementById('soundOn').style.display = 'none'
+    document.getElementById('soundOff').style.display = 'inline-block'
+}
+
+function stopBGM() {
+    bgm.pause()
+    document.getElementById('soundOff').style.display = 'none'
+    document.getElementById('soundOn').style.display = 'inline-block'
+}
+
+// playBGM()
+stopBGM()
 // startGame()

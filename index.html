@@ -25,7 +25,8 @@
             </div>
             <div class="top">
                 <div class="btn-group">
-                    <!-- <button>Sound: ON</button> -->
+                    <button id="soundOff" onclick="stopBGM()">BGM: ON</button>
+                    <button id="soundOn" onclick="playBGM()">BGM: OFF</button>
                     <button onclick="document.getElementById('help').style.display = 'flex'">Help</button>
                 </div>
             </div>
@@ -130,7 +131,7 @@
         <!-- <canvas id="canvas" width="450" height="800"></canvas> -->
         <canvas id="canvas"></canvas>
 
-        <!-- Game Assets Img -->
+        <!-- Game Assets -->
         <div class="game-img">
             <img src="assets/img/run1.png" alt="Run 1" id="run1">
             <img src="assets/img/run2.png" alt="Run 2" id="run2">
@@ -147,6 +148,12 @@
 
             <img src="assets/img/flag1.png" alt="Flag 1" id="flag1">
             <img src="assets/img/flag2.png" alt="Flag 2" id="flag2">
+
+            <!-- <audio src="assets/sound/coin.mp3" preload="auto" controls="none" id="coin"></audio>
+            <audio src="assets/sound/female-voice.mp3" preload="auto" controls="none" id="female-voice"></audio>
+            <audio src="assets/sound/footstep.mp3" preload="auto" controls="none" id="footstep"></audio>
+            <audio src="assets/sound/shocked.mp3" preload="auto" controls="none" id="shocked"></audio> -->
+            <audio src="assets/sound/hari-merdeka.mp3" id="bgm"></audio>
         </div>
     </div>
 
