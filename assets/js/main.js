@@ -22,10 +22,10 @@ function startGame() {
 
     if (myGameArea.canvas.width == 800) {
         character = new component(76, 120, 'run1', left.width + 56 - 10, myGameArea.canvas.height - 120 - 20, 'image')
-        player = new component(56, 40, 'transparent', left.width + 56, myGameArea.canvas.height - 120 - 20 + 70)
+        player = new component(56, 56, 'shadow', left.width + 56, myGameArea.canvas.height - 120 - 20 + 73, 'image')
     } else {
         character = new component(76, 120, 'run1', left.width + 56 - 10, myGameArea.canvas.height - 120 - 50, 'image')
-        player = new component(56, 40, 'transparent', left.width + 56, myGameArea.canvas.height - 120 - 50 + 70)
+        player = new component(56, 56, 'shadow', left.width + 56, myGameArea.canvas.height - 120 - 50 + 73, 'image')
     }
     scoreDisplay = new component('30px', 'visitor', 'black', 20, 40, 'text')
 }
@@ -125,10 +125,20 @@ function updateGameArea() {
     }
 
     if(everyinterval(playerSpeed[speed])) {
+        // character sprite
         if(character.image.src == document.getElementById('run1').src) {
             character.image.src = document.getElementById('run2').src
         } else {
             character.image.src = document.getElementById('run1').src
+        }
+
+        // flag sprite
+        for(i = 0; i < flag.length; i++) {
+            if(flag[i].image.src == document.getElementById('flag1').src) {
+                flag[i].image.src = document.getElementById('flag2').src
+            } else {
+                flag[i].image.src = document.getElementById('flag1').src
+            }
         }
     }
 
@@ -137,10 +147,11 @@ function updateGameArea() {
             character.y -= 65
             character.image.src = document.getElementById('fall').src
             if(player.crashWith(obstacles[i])) {
+                player.y += myGameArea.canvas.height
                 myGameArea.stop()
             }
             document.getElementById('final-score').innerHTML = 'Score: ' + score
-            document.getElementById('game-over').style.display = 'flex'
+            // document.getElementById('game-over').style.display = 'flex'
         }
     }
 
@@ -155,7 +166,7 @@ function updateGameArea() {
     frameNo++
 
     if(frameNo == 1 || everyinterval(objInterval[speed])) {
-        let x, rand, rand2, rand3
+        let x
     
         // x = [119, 175, 231]
 
@@ -167,15 +178,18 @@ function updateGameArea() {
 
         rand = Math.floor(Math.random() * 3)
         rand2 = Math.floor(Math.random() * 3)
-        rand3 = Math.floor(Math.random() * 3)
+        randFlag = Math.floor(Math.random() * 3)
 
-        if(rand != rand3) {
-            obstacles.push(new component(50, 30, 'green', x[rand], -50))
-            if(rand != rand2 && rand2 != rand3 && frameNo > 200) {
-                obstacles.push(new component(50, 30, 'green', x[rand2], -50))
+        randObs = Math.floor(Math.random() * 3)
+        randObs2 = Math.floor(Math.random() * 3)
+
+        if(rand != randFlag) {
+            obstacles.push(new component(50, 30, 'obstacle' + (randObs + 1), x[rand], -50, 'image'))
+            if(rand != rand2 && rand2 != randFlag && frameNo > 200) {
+                obstacles.push(new component(50, 30, 'obstacle' + (randObs2 + 1), x[rand2], -50, 'image'))
             }
         }
-        flag.push(new component(50, 50, 'blue', x[rand3], -70))
+        flag.push(new component(50, 50, 'flag1', x[randFlag], -70, 'image'))
         npc.push(new component(30, 30, 'blue', 0, 0))
     }
 
@@ -185,8 +199,8 @@ function updateGameArea() {
 
     left.update()
     right.update()
-    leftLine.update()
-    rightLine.update()
+    // leftLine.update()
+    // rightLine.update()
 
     for(i = 0; i < obstacles.length; i++) {
         obstacles[i].y += gameSpeed[speed]
