@@ -42,6 +42,8 @@ function startGame() {
     // femaleVoice = new sound('female-voice')
     footstep = new sound('footstep')
     gameOverSound = new sound('shocked')
+
+    // playBGM()
 }
 
 let myGameArea = {
@@ -124,6 +126,10 @@ let frameNo = 0
 let speed = 0
 
 function updateGameArea() {
+    if (localStorage.getItem('sound') == true) {
+        playBGM()
+    }
+
     if (score > 100) {
         speed = 5
     } else if (score > 80) {
@@ -326,7 +332,7 @@ function loadData() {
         ]
         
         localStorage.setItem('leaderboard', JSON.stringify(leaderboard))
-        // localStorage.setItem('sound', true)
+        localStorage.setItem('sound', false)
         console.log('data berhasil dimuat')
     }
 
@@ -397,12 +403,14 @@ function playBGM() {
     bgm.play()
     document.getElementById('soundOn').style.display = 'none'
     document.getElementById('soundOff').style.display = 'inline-block'
+    localStorage.setItem('sound', true)
 }
 
 function stopBGM() {
     bgm.pause()
     document.getElementById('soundOff').style.display = 'none'
     document.getElementById('soundOn').style.display = 'inline-block'
+    localStorage.setItem('sound', false)
 }
 
 // playBGM()
