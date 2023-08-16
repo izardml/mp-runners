@@ -78,6 +78,19 @@ body {
     padding: 0.5rem 1rem;
 }
 
+#btn-pause {
+    display: none;
+    position: absolute;
+    z-index: 800;
+    top: 0;
+    right: 0;
+    transform: scaleX(150%);
+    font-size: 1.5rem;
+    padding: 0.1rem 0.25rem;
+    margin: 0.5rem 1rem;
+    cursor: pointer;
+}
+
 #home .top .btn-group button {
     cursor: pointer;
     display: inline-block;
@@ -123,10 +136,9 @@ body {
 }
 
 .modal .modal-container .help-list li {
-    margin: 0.5rem 1rem;
-    font-weight: 800;
+    margin-top: 0.5rem;
+    font-size: 1rem;
     font-family: monospace;
-    line-height: 1.2;
     text-align: justify;
 }
 
@@ -143,10 +155,6 @@ body {
     padding: 0.25rem 1rem;
 }
 
-#game-over {
-    /* display: flex; */
-}
-
 table, th, td {
     border: 1px solid #101010;
     border-collapse: collapse;
@@ -154,6 +162,8 @@ table, th, td {
 
 th, td {
     padding: 0.25rem 1rem;
+    font-family: monospace;
+    font-size: 1rem;
 }
 
 .modal .modal-container .close-modal {
@@ -180,6 +190,7 @@ th, td {
     height: 100%;
 }
 
+.game-controller span,
 .game-controller button {
     display: inline-block;
     opacity: 0;

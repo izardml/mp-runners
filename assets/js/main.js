@@ -6,12 +6,14 @@ scoreDisplay,
 obstacles = [],
 flag = [],
 npc = [],
+house,
 
 left,
 right
 
 function startGame() {
     document.getElementById('home').style.display = 'none'
+    document.getElementById('btn-pause').style.display = 'block'
 
     myGameArea.start()
 
@@ -144,14 +146,16 @@ function updateGameArea() {
 
     for(i = 0; i < obstacles.length; i++) {
         if(player.crashWith(obstacles[i])) {
-            character.y -= 65
+            character.y -= 60
             character.image.src = document.getElementById('fall').src
             if(player.crashWith(obstacles[i])) {
                 player.y += myGameArea.canvas.height
                 myGameArea.stop()
             }
             document.getElementById('final-score').innerHTML = 'Score: ' + score
-            // document.getElementById('game-over').style.display = 'flex'
+            updateData(score)
+            document.getElementById('game-over').style.display = 'flex'
+            document.getElementById('btn-pause').style.display = 'none'
         }
     }
 
@@ -190,7 +194,34 @@ function updateGameArea() {
             }
         }
         flag.push(new component(50, 50, 'flag1', x[randFlag], -70, 'image'))
-        npc.push(new component(30, 30, 'blue', 0, 0))
+    }
+
+    if(frameNo == 1 || everyinterval(objInterval[speed] * 2)) {
+        randNPC = Math.floor(Math.random() * 3)
+
+        if (randNPC == 0) {
+            npc.push(new component(210, 150, 'house1', left.width - 210 - 20, myGameArea.canvas.height / -2, 'image'))
+        } else if (randNPC == 1) {
+            npc.push(new component(280, 200, 'house2', left.width - 280 - 20, myGameArea.canvas.height / -2, 'image'))
+        } else if (randNPC == 2) {
+            npc.push(new component(240, 200, 'house3', left.width - 240 - 20, myGameArea.canvas.height / -2, 'image'))
+        }
+    }
+
+    if(everyinterval(objInterval[speed] / 2 + objInterval[speed])) {
+        randNPC2 = Math.floor(Math.random() * 3)
+
+        if (randNPC2 == 0) {
+            npc.push(new component(210, 150, 'house1', right.x + 20, myGameArea.canvas.height / -2, 'image'))
+        } else if (randNPC2 == 1) {
+            npc.push(new component(280, 200, 'house2', right.x + 20, myGameArea.canvas.height / -2, 'image'))
+        } else if (randNPC2 == 2) {
+            npc.push(new component(240, 200, 'house3', right.x + 20, myGameArea.canvas.height / -2, 'image'))
+        }
+
+        // house = new component(210, 150, 'house1', 40, 100, 'image')
+        // house = new component(280, 200, 'house2', 40, 100, 'image')
+        // house = new component(240, 200, 'house3', 40, 100, 'image')
     }
 
     if(myGameArea.key && myGameArea.key == 37) { moveleft() }
@@ -255,15 +286,72 @@ function everyinterval(n) {
     return false
 }
 
-let bgm = document.getElementById('bgm')
+var storedData = localStorage.getItem('leaderboard')
+var parsedData = JSON.parse(storedData)
 
-function playBGM() {
-    bgm.play()
+function loadData() {
+    if (localStorage.getItem('leaderboard')) {
+        console.log('data sudah ada')
+    } else {
+        var leaderboard = [
+            { id: 1, name: 'Anton', score: 2200 },
+            { id: 2, name: 'Ahmad', score: 1200 },
+            { id: 3, name: 'David', score: 900 },
+            { id: 4, name: 'Bilbo', score: 700 },
+            { id: 5, name: 'Victor', score: 600 },
+            { id: 6, name: 'Nicolas', score: 500 },
+            { id: 7, name: 'Tono', score: 450 },
+            { id: 8, name: 'Radian', score: 300 },
+            { id: 9, name: 'Paul', score: 150 },
+            { id: 10, name: 'You', score: 0 },
+        ]
+        
+        localStorage.setItem('leaderboard', JSON.stringify(leaderboard))
+        // localStorage.setItem('complete', true)
+        console.log('data berhasil dimuat')
+    }
+
+    parsedData.sort(function(a, b) {
+        return b.score - a.score
+    })
+
+    var table = document.getElementsByClassName('leaderboard-table')[0]
+
+    while(table.rows.length > 1) {
+        table.deleteRow(1)
+    }
+
+    var i = 1
+
+    parsedData.forEach(function(item) {
+        var row = table.insertRow()
+
+        var noCell = row.insertCell(0)
+        var nameCell = row.insertCell(1)
+        var scoreCell = row.insertCell(2)
+
+        noCell.innerHTML = i
+        nameCell.innerHTML = item.name
+        scoreCell.innerHTML = item.score
+
+        i++
+    })
 }
 
-function stopBGM() {
-    bgm.pause()
+function updateData(newScore) {
+    targetItemIndex = parsedData.findIndex(function(item) {
+        return item.id === 10
+    })
+
+    if(targetItemIndex !== -1) {
+        parsedData[targetItemIndex].score = newScore
+
+        localStorage.setItem('leaderboard', JSON.stringify(parsedData))
+
+        console.log('Succesfull')
+    } else {
+        console.log('Unsuccesfull')
+    }
 }
 
 // startGame()
-// playBGM()
